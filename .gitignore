@@ -1,0 +1,7 @@
+.env
+generated_images/
+backend/__pycache__/
+*.pyc
+*.png
+test_*.py
+check_*.py
