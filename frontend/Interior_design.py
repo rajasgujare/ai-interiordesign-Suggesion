@@ -14,43 +14,50 @@ current_user_name = None
 class LoginForm(Form):
 
     def __init__(self, owner):
-        self.SetProps(Caption="AI Interior Design - Login", Width=400, Height=350)
+        self.SetProps(Caption="AI Interior Design - Login", Width=400, Height=380)
 
         self.title_label = Label(self)
-        self.title_label.SetProps(Parent=self, Align="Top", Height=60, Text="AI Interior Design")
+        self.title_label.SetProps(Parent=self, Align="Top", Height=50, Text="AI Interior Design")
 
         self.layout_main = Layout(self)
         self.layout_main.SetProps(Parent=self, Align="Client")
 
-        self.name_label = Label(self)
-        self.name_label.SetProps(Parent=self.layout_main, Align="Top", Height=25, Text="  Full Name:")
+        # Status label added LAST in code = appears at BOTTOM visually
+        self.status_label = Label(self)
+        self.status_label.SetProps(Parent=self.layout_main, Align="Top", Height=30, Text="")
 
-        self.name_edit = Edit(self)
-        self.name_edit.SetProps(Parent=self.layout_main, Align="Top", Height=35)
+        # Email field
+        self.email_edit = Edit(self)
+        self.email_edit.SetProps(Parent=self.layout_main, Align="Top", Height=35)
 
         self.email_label = Label(self)
         self.email_label.SetProps(Parent=self.layout_main, Align="Top", Height=25, Text="  Email:")
 
-        self.email_edit = Edit(self)
-        self.email_edit.SetProps(Parent=self.layout_main, Align="Top", Height=35)
+        # Password field (masked)
+        self.pass_edit = Edit(self)
+        self.pass_edit.SetProps(Parent=self.layout_main, Align="Top", Height=35, Password=True)
 
         self.pass_label = Label(self)
         self.pass_label.SetProps(Parent=self.layout_main, Align="Top", Height=25, Text="  Password:")
 
-        self.pass_edit = Edit(self)
-        self.pass_edit.SetProps(Parent=self.layout_main, Align="Top", Height=35, Password=True)
-
+        # Login / Register buttons
         self.layout_buttons = Layout(self)
         self.layout_buttons.SetProps(Parent=self.layout_main, Align="Top", Height=45)
 
         self.login_button = Button(self)
-        self.login_button.SetProps(Parent=self.layout_buttons, Align="Left", Width=180, Text="Login", OnClick=self.do_login)
+        self.login_button.SetProps(Parent=self.layout_buttons, Align="Left", Width=180,
+                                   Text="Login", OnClick=self.do_login)
 
         self.register_button = Button(self)
-        self.register_button.SetProps(Parent=self.layout_buttons, Align="Client", Text="Register", OnClick=self.do_register)
+        self.register_button.SetProps(Parent=self.layout_buttons, Align="Client",
+                                      Text="Register", OnClick=self.do_register)
 
-        self.status_label = Label(self)
-        self.status_label.SetProps(Parent=self.layout_main, Align="Top", Height=30, Text="")
+        # Full Name field — plain text, NO Password=True
+        self.name_edit = Edit(self)
+        self.name_edit.SetProps(Parent=self.layout_main, Align="Top", Height=35)
+
+        self.name_label = Label(self)
+        self.name_label.SetProps(Parent=self.layout_main, Align="Top", Height=25, Text="  Full Name:")
 
     def do_login(self, sender):
         try:
@@ -252,12 +259,10 @@ class MainForm(Form):
 
     def download_image(self, sender):
         try:
-            # Check if image is generated
             if not self.generated_image_path:
                 self.status_bar.Text = "Status: No image generated yet!"
                 return
 
-            # Open save dialog
             dialog = SaveDialog(self)
             dialog.Filter = "PNG Image|*.png"
             dialog.FileName = "my_interior_design.png"
