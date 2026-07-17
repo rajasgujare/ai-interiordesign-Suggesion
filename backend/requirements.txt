@@ -1,0 +1,9 @@
+flask
+flask-cors
+pymongo
+python-dotenv
+requests
+Pillow
+google-generativeai
+certifi
+dnspython
